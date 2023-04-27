@@ -1,0 +1,398 @@
+openapi: 3.0.0
+info:
+  title: Cars Management Service
+  description: A service for checking availability of cars
+  contact:
+    name: Hari prasath
+    email: hariprasath.narayanasamy@gmail.com
+  version: 1.0.0
+servers:
+- url: http://127.0.0.1:7000/carservice/v1
+tags:
+- name: Cars
+paths:
+  /cars:
+    get:
+      tags:
+      - Cars
+      description: Get details of all cars
+      operationId: get_all_cars
+      responses:
+        "200":
+          description: Fetched cars
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/carsdetails'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401UnauthorizedResponse'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ForbiddenResponse'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404NotFoundResponse'
+        "503":
+          description: Server unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/503ServerUnavailableResponse'
+        default:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400BadRequestResponse'
+      x-openapi-router-controller: swagger_server.controllers.cars_controller
+    post:
+      tags:
+      - Cars
+      description: Create a new cars
+      operationId: post_car
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/carsinfo'
+      responses:
+        "201":
+          description: car added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/201CarDetailsResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401UnauthorizedResponse'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ForbiddenResponse'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404NotFoundResponse'
+        "503":
+          description: Server unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/503ServerUnavailableResponse'
+        default:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400BadRequestResponse'
+      x-openapi-router-controller: swagger_server.controllers.cars_controller
+  /cars/model_name/{model_name}:
+    get:
+      tags:
+      - Cars
+      description: To fetch details of one specified car
+      operationId: get_car_details
+      parameters:
+      - name: model_name
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: It show specified cars
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/carsinfo'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401UnauthorizedResponse'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ForbiddenResponse'
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404NotFoundResponse'
+        "503":
+          description: Server unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/503ServerUnavailableResponse'
+        default:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400BadRequestResponse'
+      x-openapi-router-controller: swagger_server.controllers.cars_controller
+  /cars/{vehicle_id}:
+    delete:
+      tags:
+      - Cars
+      description: To delete cars
+      operationId: delete_car
+      parameters:
+      - name: vehicle_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200CarDeletedResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401UnauthorizedResponse'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ForbiddenResponse'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404NotFoundResponse'
+        "503":
+          description: Server unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/503ServerUnavailableResponse'
+        default:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400BadRequestResponse'
+      x-openapi-router-controller: swagger_server.controllers.cars_controller
+components:
+  schemas:
+    carsdetails:
+      type: object
+      properties:
+        vehicle_id:
+          type: string
+          description: unique id
+        model_type:
+          type: string
+          description: modeltype
+        model_name:
+          type: string
+          description: modelname
+        fuel_type:
+          type: string
+          description: car varient
+        trim:
+          type: string
+          description: type of car
+        # stock:
+        #   type: integer
+        #   description: number of available cars
+        transmission:
+          type: string
+          description: Transmission type
+      example:
+        transmission: transmission
+        model_name: model_name
+        trim: trim
+        model_type: model_type
+        fuel_type: fuel_type
+        stock: 0
+        vehicle_id: vehicle_id
+    carsinfo:
+      type: object
+      properties:
+        order_id:
+          type: string
+        # model_type:
+        #   type: string
+        #   enum:
+        #   - SUVs
+        #   - Hatchback
+        #   - Sedan
+        #   - pickuptruck
+        #   - MUV
+        #   - off road
+        # model_name:
+        #   type: string
+        # transmission:
+        #   type: string
+        #   enum:
+        #   - manual
+        #   - automatic
+        # fuel_type:
+        #   type: string
+        #   enum:
+        #   - diesel
+        #   - petrol
+        #   - ev
+        #   - cng
+        # trim:
+        #   type: string
+        #   enum:
+        #   - SE
+        #   - DX
+        #   - GT
+        # stock:
+        #   type: integer
+      example:
+        transmission: manual
+        model_name: model_name
+        trim: SE
+        model_type: SUVs
+        fuel_type: diesel
+        stock: 0
+    "201CarDetailsResponse":
+      type: object
+      properties:
+        code:
+          type: integer
+          default: 201
+        message:
+          type: string
+          default: OK
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/carsdetails'
+      example:
+        code: 0
+        data:
+        - transmission: transmission
+          model_name: model_name
+          trim: trim
+          model_type: model_type
+          fuel_type: fuel_type
+          stock: 0
+          vehicle_id: vehicle_id
+        - transmission: transmission
+          model_name: model_name
+          trim: trim
+          model_type: model_type
+          fuel_type: fuel_type
+          stock: 0
+          vehicle_id: vehicle_id
+        message: OK
+    "200CarDeletedResponse":
+      type: object
+      properties:
+        code:
+          type: integer
+          default: 200
+        message:
+          type: string
+          default: ok
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/carsdetails'
+      example:
+        code: 0
+        data:
+        - transmission: transmission
+          model_name: model_name
+          trim: trim
+          model_type: model_type
+          fuel_type: fuel_type
+          stock: 0
+          vehicle_id: vehicle_id
+        - transmission: transmission
+          model_name: model_name
+          trim: trim
+          model_type: model_type
+          fuel_type: fuel_type
+          stock: 0
+          vehicle_id: vehicle_id
+        message: ok
+    "400BadRequestResponse":
+      type: object
+      properties:
+        code:
+          type: integer
+          default: 400
+        message:
+          type: string
+          default: BAD_REQUEST
+        data:
+          type: array
+          items:
+            type: object
+    "401UnauthorizedResponse":
+      type: object
+      properties:
+        code:
+          type: integer
+          default: 401
+        message:
+          type: string
+          default: UNAUTHORIZED
+    "403ForbiddenResponse":
+      type: object
+      properties:
+        code:
+          type: integer
+          default: 403
+        message:
+          type: string
+          default: FORBIDDEN
+    "404NotFoundResponse":
+      type: object
+      properties:
+        code:
+          type: integer
+          default: 404
+        message:
+          type: string
+          default: NOT_FOUND
+    "503ServerUnavailableResponse":
+      type: object
+      properties:
+        code:
+          type: integer
+          default: 503
+        message:
+          type: string
+          default: SERVER_UNAVAILABLE
+
