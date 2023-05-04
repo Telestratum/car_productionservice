@@ -20,54 +20,54 @@ from swagger_server.test import BaseTestCase
 class TestCarsController(BaseTestCase):
     """CarsController integration test stubs"""
 
-    # def test_delete_car(self):
-    #     """Test case for delete_car
+    def test_delete_car(self):
+        """Test case for delete_car
 
         
-    #     """
-    #     response = self.client.open(
-    #         '/carservice/v1/cars/{vehicle_id}'.format(vehicle_id='c1632c60c1164404b23760d362f9b932'),
-    #         method='DELETE')
-    #     self.assert200(response,
-    #                    'Response body is : ' + response.data.decode('utf-8'))
+        """
+        response = self.client.open(
+            '/carservice/v1/cars/{vehicle_id}'.format(vehicle_id='c1632c60c1164404b23760d362f9b932'),
+            method='DELETE')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
 
-    # def test_get_all_cars(self):
-    #     """Test case for get_all_cars
-
-        
-    #     """
-    #     response = self.client.open(
-    #         '/carservice/v1/cars',
-    #         method='GET')
-    #     self.assert200(response,
-    #                    'Response body is : ' + response.data.decode('utf-8'))
-
-    # def test_get_car_details(self):
-    #     """Test case for get_car_details
+    def test_get_all_cars(self):
+        """Test case for get_all_cars
 
         
-    #     """
-    #     response = self.client.open(
-    #         '/carservice/v1/cars/model_name/{model_name}'.format(model_name='model_name_example'),
-    #         method='GET')
-    #     self.assert200(response,
-    #                    'Response body is : ' + response.data.decode('utf-8'))
+        """
+        response = self.client.open(
+            '/carservice/v1/cars',
+            method='GET')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
 
-    # def test_post_car(self):
-    #     """Test case for post_car
+    def test_get_car_details(self):
+        """Test case for get_car_details
 
         
-    #     """
-    #     body = {
-    #             "order_id": "6af804f1fa3d4976abafa9079d150e05"
-    #             }
-    #     response = self.client.open(
-    #         '/carservice/v1/cars',
-    #         method='POST',
-    #         data=json.dumps(body),
-    #         content_type='application/json')
-    #     self.assert200(response,
-    #                    'Response body is : ' + response.data.decode('utf-8'))
+        """
+        response = self.client.open(
+            '/carservice/v1/cars/model_name/{model_name}'.format(model_name='model_name_example'),
+            method='GET')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
+    def test_post_car(self):
+        """Test case for post_car
+
+        
+        """
+        body = {
+                "order_id": "6af804f1fa3d4976abafa9079d150e05"
+                }
+        response = self.client.open(
+            '/carservice/v1/cars',
+            method='POST',
+            data=json.dumps(body),
+            content_type='application/json')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
 
 
 if __name__ == '__main__':
