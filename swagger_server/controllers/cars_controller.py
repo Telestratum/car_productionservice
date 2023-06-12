@@ -23,7 +23,7 @@ carDatabase = cluster.carDatabase
 cars = carDatabase.cars
 car_orders = carDatabase.car_orders
 
-logging.basicConfig(filename="newfile1.log",format="%(filename)s::%(levelname)s:%(message)s",level=logging.DEBUG)
+logging.basicConfig(filename="productionfile.log",format="%(filename)s:%(lineno)s:%(levelname)s:%(message)s",level=logging.DEBUG)
 
 
 def delete_car(vehicle_id):  # noqa: E501
