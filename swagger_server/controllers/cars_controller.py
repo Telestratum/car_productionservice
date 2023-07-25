@@ -21,9 +21,11 @@ from swagger_server import util
 cluster = MongoClient("localhost",27017)
 carDatabase = cluster.carDatabase
 cars = carDatabase.cars
+users = carDatabase.users
+car_models = carDatabase.car_models
 car_orders = carDatabase.car_orders
 
-logging.basicConfig(filename="productionfile.log",format="%(filename)s:%(lineno)s:%(levelname)s:%(message)s",level=logging.DEBUG)
+logging.basicConfig(filename="/home/hari/Desktop/mahindra_carsservice/productionfile.log",format="%(filename)s:%(lineno)s:%(levelname)s:%(message)s",level=logging.DEBUG)
 
 
 def delete_car(vehicle_id):  # noqa: E501
@@ -77,8 +79,8 @@ def get_car_details(model_name):  # noqa: E501
     :rtype: Carsinfo
     """
     try:
-        if cars.find({"model_name":model_name}):
-            data=cars.find({"model_name":model_name})
+        if car_models.find({"model_name":model_name}):
+            data=car_models.find({"model_name":model_name})
             data_list=[]
             for i in data:
                     i["_id"]=str(i["_id"])
@@ -107,6 +109,6 @@ def post_car(body=None):  # noqa: E501
             else:
                 body.update({"vehicle_id" : (uuid.uuid4().hex)})
                 cars.insert_one(body)
-                return "cars Created", 200
+                return "Cars Created", 200
         except:
             return "Internal_server_error",500
